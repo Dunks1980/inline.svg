@@ -1,15 +1,113 @@
 body {
   margin: 0;
   padding: 0;
+  position: relative;
+  overflow-x: hidden;
+  padding-bottom: 60px;
+  @media (max-width: 549px) {
+    overflow-y: scroll;
+  }
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #434343;
+  a {
+    color: #434343;
+  }
+}
+
+header {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  height: 60px;
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .logo {
+    display: inline-block;
+    padding: 20px;
+    width: 30px;
+    height: 30px;
+    transition: 0.1s ease-in-out;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  .npm,
+  .github,
+  .email {
+    float: right;
+    padding: 20px 20px 0 0;
+    width: 30px;
+    height: 30px;
+
+  }
+
+  .email {
+    svg {
+      width: 30px;
+    height: 30px;
+      g {
+        fill: #777777;
+      }
+      transition: 0.1s ease-in-out;
+      &:hover {
+        transform: scale(1.1);
+        g {
+          fill: red;
+        }
+      }
+    }
+  }
+
+  .github {
+    svg {
+      width: 30px;
+      height: 30px;
+      .cls-1 {
+        fill: #777777;
+      }
+      transition: 0.1s ease-in-out;
+      &:hover {
+        transform: scale(1.1);
+        .cls-1 {
+          fill: #434343;
+        }
+      }
+    }
+  }
+
+  .npm {
+    svg {
+      width: 30px;
+    height: 30px;
+      #Selection2 {
+        fill: #777777;
+      }
+      transition: 0.1s ease-in-out;
+      &:hover {
+        transform: scale(1.1);
+        #Selection2 {
+          fill: red;
+        }
+      }
+    }
+  }
 }
 
 .svg-wrapper {
+  overflow: hidden;
+  animation: load ease-in-out 0.4s;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
-  min-height: 100vh;
+  height: auto;
+  min-height: calc(100vh - 60px);
   flex-direction: column;
   .code-text {
     text-align: center;
@@ -38,10 +136,31 @@ body {
     width: auto;
     max-width: 520px;
 
-    #svgbar {
+    .svgbar {
+      position: absolute;
       fill: #ffb13b;
-      animation: colorchange 10s linear 1s infinite;
+      animation: colorchange 15s ease-in-out infinite;
     }
+  }
+}
+
+footer {
+  position: absolute;
+  right: 20px;
+  left: 20px;
+  bottom: 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+@keyframes load {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
 }
 
@@ -57,6 +176,7 @@ body {
 
   50% {
     fill: blue;
+    transform: rotate(360deg);
   }
 
   75% {
@@ -65,6 +185,6 @@ body {
 
   100% {
     fill: #ffb13b;
-    transform: rotate(360deg);
+    transform: rotate(0deg);
   }
 }
