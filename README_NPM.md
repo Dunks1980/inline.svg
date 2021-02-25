@@ -22,4 +22,4 @@ import {inlinesvg} from "@dunks1980/inline.svg";
 inlinesvg('.svg');
 ```
 <br />
-Click the Anchor tag, if it opens the svg it should have no issue rendering to the DOM. Works in IE11.
+Click the Anchor tag, if it opens the svg it should have no issue rendering to the DOM.
