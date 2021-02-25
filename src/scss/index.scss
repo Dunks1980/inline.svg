@@ -25,12 +25,12 @@ body {
     border-radius: 8px;
     padding: 10px;
     width: 100vw;
-    max-width: 320px;
+    max-width: 420px;
     font-size: 14px;
     display: block;
     @media screen and (min-width: 550px) {
       font-size: 18px;
-      max-width: 420px;
+      max-width: 520px;
     }
   }
   svg {
