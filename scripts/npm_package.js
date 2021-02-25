@@ -1,5 +1,5 @@
 const fs = require('fs');
-const stream = fs.createWriteStream("dist/package.json");
+const stream = fs.createWriteStream("package/package.json");
 const path = require('path');
 const CWD = process.cwd();
 const PACKAGE = require(path.join(CWD, 'package.json'));
@@ -23,4 +23,4 @@ stream.once('open', function(fd) {
   stream.end();
 });
 
-console.log("dist\\package.json v" + PACKAGE.version);
+console.log("package\\package.json v" + PACKAGE.version);

@@ -1,5 +1,6 @@
 .cache/
 dist/
+package/
 node_modules/
 .vscode/
 *.tgz
