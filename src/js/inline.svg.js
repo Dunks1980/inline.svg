@@ -1,8 +1,7 @@
-const endsWith = (str, suffix) => {
-  return str.slice(-suffix.length) === suffix
-};
-
 const inlinesvg = (query) => {
+  const endsWith = (str, suffix) => {
+    return str.slice(-suffix.length) === suffix;
+  };
   const getImage = (el, href) => {
     let xhr = new XMLHttpRequest();
     xhr.open("GET", href);

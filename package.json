@@ -1,11 +1,11 @@
 {
   "name": "inline.svg",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A simple plugin that inlines a SVG file in your HTML",
   "scripts": {
     "serve": "parcel src/index.html",
-    "build": "parcel build src/index.html",
-    "package": "node scripts/build_task.js"
+    "build": "node scripts/build_task.js",
+    "package": "node scripts/package_task.js"
   },
   "author": "Ian Dunkerley",
   "license": "MIT",
