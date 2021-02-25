@@ -1,3 +1,7 @@
+const endsWith = (str, suffix) => {
+  return str.slice(-suffix.length) === suffix
+};
+
 const inlinesvg = (query) => {
   const getImage = (el, href) => {
     let xhr = new XMLHttpRequest();
@@ -22,7 +26,7 @@ const inlinesvg = (query) => {
       } else {
         let href = el.href;
         if (!href) return console.log("%cinlineSvgFile: %cNo href found", 'color:red', 'color:inherit');
-        if (href.endsWith('.svg')) {
+        if (endsWith(href, '.svg')) {
           getImage(el, href);
         } else {
           return console.log("%cinlineSvgFile: %cCan only convert svg files", 'color:red', 'color:inherit');
