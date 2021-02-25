@@ -1,0 +1,44 @@
+{
+  "name": "inline.svg",
+  "version": "1.0.0",
+  "description": "A simple plugin that inlines a SVG file in your HTML",
+  "scripts": {
+    "serve": "parcel src/index.html",
+    "build": "node scripts/build_task.js"
+  },
+  "author": "Ian Dunkerley",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^9.8.6",
+    "parcel-bundler": "^1.12.4",
+    "postcss": "^8.2.6",
+    "sass": "^1.32.7"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ],
+  "dependencies": {
+    "js": "^0.1.0",
+    "normalize.css": "^8.0.1",
+    "scss": "^0.2.4",
+    "src": "^1.1.2"
+  },
+  "keywords": [
+    "SVG",
+    "Inline",
+    "HTML",
+    "File",
+    "plugin",
+    "Parcel",
+    "dunks1980"
+  ],
+  "homepage": "https://inlinesvg.dunks1980.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dunks1980/inline.svg"
+  },
+  "bugs": {
+    "url": "https://github.com/Dunks1980/inline.svg/issues"
+  },
+}
