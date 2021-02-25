@@ -1,18 +1,29 @@
-const inlinesvg = (query) => {
+const inlinesvg = (query, callback) => {
+  let arrOfEls;
   const endsWith = (str, suffix) => {
     return str.slice(-suffix.length) === suffix;
   };
-  const getImage = (el, href) => {
+  const getImage = (el, href, count, last_image) => {
+    let hasCallback = callback && typeof callback === 'function';
     let xhr = new XMLHttpRequest();
     xhr.open("GET", href);
     xhr.onload = () => {
-      el.insertAdjacentHTML('afterend', xhr.responseText);
+      el.insertAdjacentHTML('afterend', xhr.responseText.trim());
+      if (hasCallback) {
+        arrOfEls.push({url: href, element: el.nextSibling});
+      }
       el.parentNode.removeChild(el);
+      if (last_image && hasCallback) {
+        callback(arrOfEls);
+      }
     };
     xhr.send();
   };
   let els = document.querySelectorAll(query);
+  let count = 0;
   if (els && els.length) {
+    //console.log('els-' + els.length);
+    arrOfEls = [];
     [].forEach.call(els, (el) => {
       if (!el) return console.log("%cinlineSvgFile: %cElement not found ", 'color:red', 'color:inherit');
       if (el.tagName !== 'A') {
@@ -26,7 +37,8 @@ const inlinesvg = (query) => {
         let href = el.href;
         if (!href) return console.log("%cinlineSvgFile: %cNo href found", 'color:red', 'color:inherit');
         if (endsWith(href, '.svg')) {
-          getImage(el, href);
+          count++;
+          getImage(el, href, (count).toString(), Number(count) === Number(els.length));
         } else {
           return console.log("%cinlineSvgFile: %cCan only convert svg files", 'color:red', 'color:inherit');
         }
