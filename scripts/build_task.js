@@ -2,7 +2,7 @@
 const execSync = require('child_process').execSync;
 
 // run the parcel scripts
-let parcel_scripts = 'parcel build src/js/index.js --global window -o /index.min.js --no-content-hash --no-source-maps --experimental-scope-hoisting --out-dir package';
+let parcel_scripts = 'parcel build src/js/inline.svg.js --global window -o /index.min.js --no-content-hash --no-source-maps --experimental-scope-hoisting --out-dir package';
 
 console.log(execSync(parcel_scripts, {encoding: 'utf8'}));
 // LICENSE

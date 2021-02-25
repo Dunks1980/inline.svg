@@ -15,7 +15,7 @@ npm i @dunks1980/inline.svg --save
 ```
 
 ```
-import {inlinesvg} from "./inline.svg.js";
+import {inlinesvg} from "@dunks1980/inline.svg";
 ```
 
 ```
