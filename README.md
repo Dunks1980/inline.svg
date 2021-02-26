@@ -61,7 +61,7 @@ With the url of the the SVG loaded (for identifying them) and the element loaded
 ```javascript
 // console.log(elements);
 ▼ (4) [{…}, {…}, {…}, {…}]
-▼ 0: {url: "http://localhost:1234/svg/logo.svg", element: a}
+▶ 0: {url: "http://localhost:1234/svg/logo.svg", element: a}
 ▶ 1: {url: "http://localhost:1234/svg/npm.svg", element: a}
 ▶ 2: {url: "http://localhost:1234/svg/github.svg", element: a}
 ▶ 3: {url: "http://localhost:1234/svg/email.svg", element: a}
