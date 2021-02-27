@@ -16,17 +16,25 @@ const inlinesvg = (query, callback) => {
     let hasCallback = callback && typeof callback === 'function';
     let xhr = new XMLHttpRequest();
     xhr.open('GET', href);
-    xhr.onload = () => {
-      el.insertAdjacentHTML('afterend', xhr.responseText.trim());
-      if (hasCallback) {
-        arrOfEls.push({
-          url: href,
-          element: el.nextSibling
-        });
-      }
-      el.parentNode.removeChild(el);
-      if (last_image && hasCallback) {
-        callback(arrOfEls);
+    xhr.onloadend = () => {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        let res =  xhr.responseText;
+        if (res) {
+          el.insertAdjacentHTML('afterend', res.trim());
+          setTimeout(() => {
+            let newEl = el.nextSibling;
+            if (hasCallback) {
+              arrOfEls.push({
+                url: href,
+                element: newEl
+              });
+            }
+            el.parentNode.removeChild(el);
+            if (last_image && hasCallback) {
+              callback(arrOfEls);
+            }
+          },10);
+        }
       }
     };
     xhr.send();
