@@ -1,25 +1,28 @@
 import 'whatwg-fetch';
-import { polyfill } from 'es6-promise'; polyfill();
+import {
+  polyfill
+} from 'es6-promise';
+polyfill();
 
 const supports_DOMParser = () => {
-	if (!window.DOMParser) return false;
-	var parser = new DOMParser();
-	try {
-		parser.parseFromString('x', 'text/html');
-	} catch(err) {
-		return false;
-	}
-	return true;
+  if (!window.DOMParser) return false;
+  var parser = new DOMParser();
+  try {
+    parser.parseFromString('x', 'text/html');
+  } catch (err) {
+    return false;
+  }
+  return true;
 };
 
 supports_DOMParser();
 
 const stringToHTML = (str) => {
-	if (supports_DOMParser) {
-		var parser = new DOMParser();
-		var doc = parser.parseFromString(str, 'text/html');
-		return doc.body;
-	} else {
+  if (supports_DOMParser) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(str, 'text/html');
+    return doc.body;
+  } else {
     var dom = document.createElement('div');
     dom.innerHTML = str;
     return dom;
@@ -40,17 +43,21 @@ const inlinesvg = (query, callback) => {
   const endsWith = (str, suffix) => {
     return str.slice(-suffix.length) === suffix;
   };
-  const getImage = (el, href, count, last_image) => {
+  const getImage = (el, href, last_image) => {
     let hasCallback = callback && typeof callback === 'function';
     window.fetch(href)
-      .then(function(response) {
+      .then(function (response) {
         return response.text();
-      }).then(function(body) {
-        let firstChild_el = stringToHTML(body).firstChild;
+      })
+      .then(function (body) {
+        let firstChild_el = stringToHTML(body).childNodes[0];
         if (!firstChild_el) {
           return console.log(c + prefix + c + 'SVG Element not found in file: ' + href, red, inherit);
         }
         el.insertAdjacentElement('afterend', firstChild_el);
+        return firstChild_el;
+      })
+      .then(function(firstChild_el){
         el.parentNode.removeChild(el);
         if (hasCallback) {
           arrOfEls.push({
@@ -58,6 +65,7 @@ const inlinesvg = (query, callback) => {
             element: firstChild_el
           });
         }
+      }).then(function(){
         if (last_image && hasCallback) {
           callback(arrOfEls);
         }
@@ -73,8 +81,8 @@ const inlinesvg = (query, callback) => {
         let href = el.href;
         if (!href) return console.log(c + prefix + c + 'No href found', red, inherit);
         if (endsWith(href, '.svg')) {
+          getImage(el, href, Number(count) === Number(els.length - 1));
           count++;
-          getImage(el, href, (count).toString(), Number(count) === Number(els.length));
         } else {
           return console.log(c + prefix + c + 'Can only convert svg files', red, inherit);
         }
