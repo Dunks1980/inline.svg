@@ -57,14 +57,41 @@ inlinesvg('.inlinesvg', (elements) => {
 
 ```
 
-With the url of the the SVG loaded (for identifying them) and the element loaded for JS usage if needed:
+With the url of the the SVG loaded and data attribute for identifying them:
 ```javascript
 // console.log(elements);
 ▼ (4) [{…}, {…}, {…}, {…}]
-▶ 0: {url: "http://localhost:1234/svg/logo.svg", element: svg#logo}
-▶ 1: {url: "http://localhost:1234/svg/npm.svg", element: svg#npm}
-▶ 2: {url: "http://localhost:1234/svg/github.svg", element: svg#github}
-▶ 3: {url: "http://localhost:1234/svg/email.svg", element: svg}#email
+▶ 0: {url: "http://localhost:1234/svg/logo.svg", data-inlinesvg: ".inlinesvg-1"}
+▶ 1: {url: "http://localhost:1234/svg/npm.svg", data-inlinesvg: ".inlinesvg-2"}
+▶ 2: {url: "http://localhost:1234/svg/github.svg", data-inlinesvg: ".inlinesvg-3"}
+▶ 3: {url: "http://localhost:1234/svg/email.svg", data-inlinesvg: ".inlinesvg-4"}
 ▶ length: 4
 ▶ __proto__: Array(0)
+```
+
+Passing true after the callback returns the elements for JS usage if needed:
+
+```javascript
+inlinesvg('.inlinesvg', (elements) => {
+  console.log(elements);
+}, true);
+```
+
+
+```javascript
+// console.log(elements);
+▶ 0: {url: "http://localhost:1234/svg/logo.svg", data-inlinesvg: ".inlinesvg-1", element: a}
+▶ 1: {url: "http://localhost:1234/svg/npm.svg", data-inlinesvg: ".inlinesvg-2", element: a}
+▶ 2: {url: "http://localhost:1234/svg/github.svg", data-inlinesvg: ".inlinesvg-3", element: a}
+▼  3:
+  data-inlinesvg: ".inlinesvg-4"
+  ▼ element: a
+      accessKey: ""
+      ariaAtomic: null
+      ariaAutoComplete: null
+      ariaBusy: null
+      ariaChecked: null
+      ariaColCount: null
+      ariaColIndex: null
+      ariaColSpan: null
 ```

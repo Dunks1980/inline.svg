@@ -1,3 +1,5 @@
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import 'whatwg-fetch';
 import {
   polyfill
@@ -29,8 +31,23 @@ const stringToHTML = (str) => {
   }
 };
 
-const inlinesvg = (query, callback) => {
-  let arrOfEls,
+const checkElement = async (selector) => {
+  while ( document.querySelector(selector) === null) {
+    await new Promise( resolve => requestAnimationFrame(resolve));
+  }
+  return document.querySelector(selector); 
+};
+
+const inlinesvg = (query, callback, return_elements) => {
+
+  if (callback && !return_elements && typeof callback === 'boolean') {
+    return_elements = callback;
+  }
+
+  let 
+    arrOfEls,
+    arrOfAdded = [],
+    countOfAdded = 0,
     els = document.querySelectorAll(query),
     count = 0,
     red = 'color:red;',
@@ -52,22 +69,39 @@ const inlinesvg = (query, callback) => {
       .then(function (body) {
         let firstChild_el = stringToHTML(body).childNodes[0];
         if (!firstChild_el) {
-          return console.log(c + prefix + c + 'SVG Element not found in file: ' + href, red, inherit);
+          console.log(c + prefix + c + 'SVG Element not found in file: ' + href, red, inherit);
+          return false;
         }
+        firstChild_el.setAttribute('data-inlinesvg', `${query}-${++countOfAdded}`);
         el.insertAdjacentElement('afterend', firstChild_el);
+        arrOfAdded.push(`${query}-${countOfAdded}`);
         return firstChild_el;
       })
-      .then(function(firstChild_el){
+      .then(function (firstChild_el) {
         el.parentNode.removeChild(el);
         if (hasCallback) {
-          arrOfEls.push({
-            url: href,
-            element: firstChild_el
-          });
+          if (return_elements) {
+            arrOfEls.push({
+              url: href,
+              'data-inlinesvg': `${query}-${countOfAdded}`,
+              element: firstChild_el
+            });
+          } else {
+            arrOfEls.push({
+              url: href,
+              'data-inlinesvg': `${query}-${countOfAdded}`
+            });
+          }
         }
-      }).then(function(){
+      }).then(function () {
         if (last_image && hasCallback) {
-          callback(arrOfEls);
+          let countOfFound = 0;
+          arrOfAdded.forEach((item) => {
+            checkElement(`[data-inlinesvg="${item}"]`).then(() => {
+              countOfFound++;
+              if (countOfFound === countOfAdded) callback(arrOfEls);
+            });
+          });
         }
       });
   };
