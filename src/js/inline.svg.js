@@ -1,10 +1,19 @@
-import "core-js/stable";
-import "regenerator-runtime/runtime";
-import 'whatwg-fetch';
 import {
   polyfill
 } from 'es6-promise';
+import 'whatwg-fetch';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 polyfill();
+
+const
+  dataAttr = 'data-inlinesvg',
+  prefix = 'inline.svg: ',
+  red = 'color:red;',
+  green = 'color: lightgreen;',
+  inherit = 'color:inherit;',
+  code = 'font-size: 16px; font-family: "Courier New", monospace;',
+  c = '%c';
 
 const supports_DOMParser = () => {
   if (!window.DOMParser) return false;
@@ -16,8 +25,6 @@ const supports_DOMParser = () => {
   }
   return true;
 };
-
-supports_DOMParser();
 
 const stringToHTML = (str) => {
   if (supports_DOMParser) {
@@ -32,10 +39,18 @@ const stringToHTML = (str) => {
 };
 
 const checkElement = async (selector) => {
-  while ( document.querySelector(selector) === null) {
-    await new Promise( resolve => requestAnimationFrame(resolve));
+  while (document.querySelector(selector) === null) {
+    await new Promise(resolve => requestAnimationFrame(resolve));
   }
   return document.querySelector(selector);
+};
+
+const endsWith = (str, suffix) => {
+  return str.slice(-suffix.length) === suffix;
+};
+
+const errorLogger = (message) => {
+  return console.log(c + prefix + c + message, red, inherit);
 };
 
 const inlinesvg = (query, callback, return_elements) => {
@@ -45,55 +60,39 @@ const inlinesvg = (query, callback, return_elements) => {
     arrOfAdded = [],
     countOfAdded = 0,
     els = document.querySelectorAll(query),
-    count = 0,
-    red = 'color:red;',
-    yellow = 'color:yellow;',
-    green = 'color: lightgreen;',
-    inherit = 'color:inherit;',
-    code = 'font-size: 16px; font-family: "Courier New", monospace;',
-    prefix = 'inline.svg: ',
-    c = '%c';
-  const endsWith = (str, suffix) => {
-    return str.slice(-suffix.length) === suffix;
-  };
-  const getImage = (el, href, last_image) => {
+    count = 0;
+
+  // Get images and return callback with data:
+  const getImage = (source_el, href, last_image) => {
     let hasCallback = callback && typeof callback === 'function';
     window.fetch(href)
       .then(function (response) {
         return response.text();
       })
       .then(function (body) {
-        let firstChild_el = stringToHTML(body).childNodes[0];
-        if (!firstChild_el) {
-          console.log(c + prefix + c + 'SVG Element not found in file: ' + href, red, inherit);
-          return false;
+        if (!stringToHTML(body) && !stringToHTML(body).childNodes[0]) {
+          return errorLogger('No Element not found in file: ' + href);
         }
-        firstChild_el.setAttribute('data-inlinesvg', `${query}-${++countOfAdded}`);
-        el.insertAdjacentElement('afterend', firstChild_el);
+        let firstChild_el = stringToHTML(body).childNodes[0];
+        firstChild_el.setAttribute(dataAttr, `${query}-${++countOfAdded}`);
+        source_el.insertAdjacentElement('afterend', firstChild_el);
         arrOfAdded.push(`${query}-${countOfAdded}`);
         return firstChild_el;
       })
       .then(function (firstChild_el) {
-        el.parentNode.removeChild(el);
+        source_el.parentNode.removeChild(source_el);
         if (hasCallback) {
-          if (return_elements) {
-            arrOfEls.push({
-              url: href,
-              'data-inlinesvg': `${query}-${countOfAdded}`,
-              element: firstChild_el
-            });
-          } else {
-            arrOfEls.push({
-              url: href,
-              'data-inlinesvg': `${query}-${countOfAdded}`
-            });
-          }
+          arrOfEls.push({
+            url: href,
+            dataAttr: `${query}-${countOfAdded}`,
+            element: return_elements ? firstChild_el : false
+          });
         }
       }).then(function () {
         if (last_image && hasCallback) {
           let countOfFound = 0;
           arrOfAdded.forEach((item) => {
-            checkElement(`[data-inlinesvg="${item}"]`).then(() => {
+            checkElement(`[${dataAttr}="${item}"]`).then(() => {
               countOfFound++;
               if (countOfFound === countOfAdded) callback(arrOfEls);
             });
@@ -101,23 +100,25 @@ const inlinesvg = (query, callback, return_elements) => {
         }
       });
   };
+  
+  // Check for issues and get images:
   if (els && els.length) {
     arrOfEls = [];
     [].forEach.call(els, (el) => {
       if (!el) {
-        return console.log(c + prefix + c + 'Element not found', red, inherit);
+        errorLogger('Element not found');
       }
       if (el.tagName.toLowerCase() === 'a') {
         let href = el.href;
-        if (!href) return console.log(c + prefix + c + 'No href found', red, inherit);
+        if (!href) return errorLogger('No href found');
         if (endsWith(href, '.svg')) {
           getImage(el, href, Number(count) === Number(els.length - 1));
           count++;
         } else {
-          return console.log(c + prefix + c + 'Can only convert svg files', red, inherit);
+          return errorLogger('Can only convert svg files');
         }
       } else {
-        console.log(c + '\n\n' + prefix + c + 'Element needs to be a Anchor Tag, Example:\n', red, inherit);
+        errorLogger('Element needs to be a Anchor Tag, Example:\n');
         console.log(c + `\t${el.outerHTML}\n`, red + code);
         console.log('Change to:\n\n');
         console.log(c + `\t<a ${
@@ -132,11 +133,7 @@ const inlinesvg = (query, callback, return_elements) => {
       }
     });
   } else {
-    return console.log(c + prefix + c + 'No elements found for the selector ' + c + query,
-      red,
-      inherit,
-      yellow
-    );
+    return errorLogger('No elements found for the selector: ' + query);
   }
 };
 if (typeof exports != "undefined") {
