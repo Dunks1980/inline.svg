@@ -1,6 +1,6 @@
 {
   "name": "inline.svg",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A simple plugin that inlines a SVG file in your HTML",
   "scripts": {
     "serve": "parcel src/index.html",
@@ -26,6 +26,10 @@
     "normalize.css": "^8.0.1",
     "scss": "^0.2.4",
     "src": "^1.1.2"
+  },
+  "npmPackageDependencies": {
+    "whatwg-fetch": "^3.6.1",
+    "es6-promise": "^4.2.8"
   },
   "keywords": [
     "SVG",

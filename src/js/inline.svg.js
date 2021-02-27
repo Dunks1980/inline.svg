@@ -1,7 +1,7 @@
 import 'whatwg-fetch';
 import { polyfill } from 'es6-promise'; polyfill();
 
-const supports_DOMParser = (() => {
+const supports_DOMParser = () => {
 	if (!window.DOMParser) return false;
 	var parser = new DOMParser();
 	try {
@@ -10,7 +10,9 @@ const supports_DOMParser = (() => {
 		return false;
 	}
 	return true;
-})();
+};
+
+supports_DOMParser();
 
 const stringToHTML = (str) => {
 	if (supports_DOMParser) {
@@ -44,16 +46,16 @@ const inlinesvg = (query, callback) => {
       .then(function(response) {
         return response.text();
       }).then(function(body) {
-        let innersvg = stringToHTML(body).querySelector('svg');
-        if (!innersvg) {
+        let firstChild_el = stringToHTML(body).firstChild;
+        if (!firstChild_el) {
           return console.log(c + prefix + c + 'SVG Element not found in file: ' + href, red, inherit);
         }
-        el.insertAdjacentElement('afterend', innersvg);
+        el.insertAdjacentElement('afterend', firstChild_el);
         el.parentNode.removeChild(el);
         if (hasCallback) {
           arrOfEls.push({
             url: href,
-            element: innersvg
+            element: firstChild_el
           });
         }
         if (last_image && hasCallback) {
