@@ -1,3 +1,29 @@
+import 'whatwg-fetch';
+import { polyfill } from 'es6-promise'; polyfill();
+
+const supports_DOMParser = (() => {
+	if (!window.DOMParser) return false;
+	var parser = new DOMParser();
+	try {
+		parser.parseFromString('x', 'text/html');
+	} catch(err) {
+		return false;
+	}
+	return true;
+})();
+
+const stringToHTML = (str) => {
+	if (supports_DOMParser) {
+		var parser = new DOMParser();
+		var doc = parser.parseFromString(str, 'text/html');
+		return doc.body;
+	} else {
+    var dom = document.createElement('div');
+    dom.innerHTML = str;
+    return dom;
+  }
+};
+
 const inlinesvg = (query, callback) => {
   let arrOfEls,
     els = document.querySelectorAll(query),
@@ -14,30 +40,26 @@ const inlinesvg = (query, callback) => {
   };
   const getImage = (el, href, count, last_image) => {
     let hasCallback = callback && typeof callback === 'function';
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', href);
-    xhr.onloadend = () => {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        let res =  xhr.responseText;
-        if (res) {
-          el.insertAdjacentHTML('afterend', res.trim());
-          setTimeout(() => {
-            let newEl = el.nextSibling;
-            if (hasCallback) {
-              arrOfEls.push({
-                url: href,
-                element: newEl
-              });
-            }
-            el.parentNode.removeChild(el);
-            if (last_image && hasCallback) {
-              callback(arrOfEls);
-            }
-          },10);
+    window.fetch(href)
+      .then(function(response) {
+        return response.text();
+      }).then(function(body) {
+        let innersvg = stringToHTML(body).querySelector('svg');
+        if (!innersvg) {
+          return console.log(c + prefix + c + 'SVG Element not found in file: ' + href, red, inherit);
         }
-      }
-    };
-    xhr.send();
+        el.insertAdjacentElement('afterend', innersvg);
+        el.parentNode.removeChild(el);
+        if (hasCallback) {
+          arrOfEls.push({
+            url: href,
+            element: innersvg
+          });
+        }
+        if (last_image && hasCallback) {
+          callback(arrOfEls);
+        }
+      });
   };
   if (els && els.length) {
     arrOfEls = [];
