@@ -35,16 +35,12 @@ const checkElement = async (selector) => {
   while ( document.querySelector(selector) === null) {
     await new Promise( resolve => requestAnimationFrame(resolve));
   }
-  return document.querySelector(selector); 
+  return document.querySelector(selector);
 };
 
 const inlinesvg = (query, callback, return_elements) => {
 
-  if (callback && !return_elements && typeof callback === 'boolean') {
-    return_elements = callback;
-  }
-
-  let 
+  let
     arrOfEls,
     arrOfAdded = [],
     countOfAdded = 0,
