@@ -15,8 +15,7 @@ let package_details =
   "homepage": ${JSON.stringify(PACKAGE.homepage)},
   "keywords": ${JSON.stringify(PACKAGE.keywords)},
   "repository": ${JSON.stringify(PACKAGE.repository)},
-  "bugs": ${JSON.stringify(PACKAGE.bugs)},
-  "dependencies": ${JSON.stringify(PACKAGE.npmPackageDependencies)}
+  "bugs": ${JSON.stringify(PACKAGE.bugs)}
 }`;
 
 stream.once('open', function(fd) {
