@@ -18,13 +18,14 @@
     <div class="email"><use class="inlinesvg" href="svg/email.svg"/></div>
   </header>
   <div class="svg-wrapper">
-    <use id="svg" href="svg/inline.svg/"></use>
+    <div><use id="svg" href="svg/inline.svg/"></div>
     <div class="code-text">
       <h1><pre><code>npm i @dunks1980/inline.svg --save</code></pre></h1>
       <h1><pre><code>import {inlinesvg} from "@dunks1980/inline.svg";</code></pre></h1>
-      <h1><pre><code>&lt;use class="my-svg" href="/foo.svg"/&gt;
-&lt;use class="my-svg" href="/bar.svg"/&gt;</code></pre></h1>
-      <h1><pre><code>inlinesvg('.my-svg');</code></pre></h1>
+      <h1><pre><code>&lt;div&gt;&lt;use id="svg" href="/foo.svg"/&gt;&lt;/div&gt;
+or
+&lt;a id="svg" href="/bar.svg" aria-label="svg"&gt;&lt;/a&gt;</code></pre></h1>
+      <h1><pre><code>inlinesvg('#svg');</code></pre></h1>
     </div>
   </div>
   <footer></footer>

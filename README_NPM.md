@@ -27,6 +27,8 @@ New in version 1.2.0 (better for caching and wrapping with an anchor):
 <use class="svg" href="svg/inline1.svg"/>
 <use class="svg" href="svg/inline2.svg"/>
 ```
+! Note on using, &lt;use/&gt; tag. It has no closing tag and in my tests, if it is not immediately followed by a closing tag it can cause the rest of the page to render incorrectly, you could use &lt;use attrs&gt;&lt;/use&gt; but I find &lt;div&gt;&lt;use attrs/>&lt;/div&gt; cleaner as the &lt;use/&gt; tag doesn't usually have a closing tag. 
+
 Or old way:
 
 ```html
