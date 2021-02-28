@@ -133,19 +133,28 @@ header {
       max-width: 520px;
     }
   }
-  svg {
+  div.svg-logo{
     height: 100%;
     width: 100%;
-    max-height:250px;
-    max-width: 250px;
-    max-height: 450px;
-    max-width: 450px;
-    .svgbar {
-      position: absolute;
-      fill: #ffb13b;
-      animation: colorchange 15s ease-in-out infinite;
+    max-width: 350px;
+    svg {
+      height: 100%;
+      width: 100%;
+      max-height:350px;
+      max-width: 350px;
+      max-height: 450px;
+      max-width: 450px;
+      .svgbar {
+        position: absolute;
+        fill: #ffb13b;
+        animation: colorchange 15s ease-in-out infinite;
+      }
     }
+
+
+
   }
+ 
 }
 
 footer {
