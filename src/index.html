@@ -12,18 +12,19 @@
 </head>
 <body>
   <header>
-    <div class="logo"><a class="inlinesvg" href="svg/logo.svg"></a></div>
-    <div class="npm"><a class="inlinesvg" href="svg/npm.svg"></a></div>
-    <div class="github"><a class="inlinesvg" href="svg/github.svg"></a></div>
-    <div class="email"><a class="inlinesvg" href="svg/email.svg"></a></div>
+    <div class="logo"><use class="inlinesvg" href="svg/logo.svg"/></div>
+    <div class="npm"><use class="inlinesvg" href="svg/npm.svg"/></div>
+    <div class="github"><use class="inlinesvg" href="svg/github.svg"/></div>
+    <div class="email"><use class="inlinesvg" href="svg/email.svg"/></div>
   </header>
   <div class="svg-wrapper">
-    <a id="svg" href="svg/inline.svg"></a>
+    <use id="svg" href="svg/inline.svg/"></use>
     <div class="code-text">
       <h1><pre><code>npm i @dunks1980/inline.svg --save</code></pre></h1>
-      <h1><pre><code>&lt;a id="svg" href="svg/inline.svg"&gt;&lt;/a&gt;</code></pre></h1>
       <h1><pre><code>import {inlinesvg} from "@dunks1980/inline.svg";</code></pre></h1>
-      <h1><pre><code>inlinesvg('#svg');</code></pre></h1>
+      <h1><pre><code>&lt;use class="my-svg" href="/foo.svg"/&gt;
+&lt;use class="my-svg" href="/bar.svg"/&gt;</code></pre></h1>
+      <h1><pre><code>inlinesvg('.my-svg');</code></pre></h1>
     </div>
   </div>
   <footer></footer>

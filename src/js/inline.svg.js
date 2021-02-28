@@ -108,8 +108,9 @@ const inlinesvg = (query, callback, return_elements) => {
       if (!el) {
         errorLogger('Element not found');
       }
-      if (el.tagName.toLowerCase() === 'a') {
-        let href = el.href;
+      let tag = el.tagName.toLowerCase();
+      if (tag === 'use' || tag === 'a') {
+        let href = el.getAttribute('href');
         if (!href) return errorLogger('No href found');
         if (endsWith(href, '.svg')) {
           getImage(el, href, Number(count) === Number(els.length - 1));
@@ -118,16 +119,29 @@ const inlinesvg = (query, callback, return_elements) => {
           return errorLogger('Can only convert svg files');
         }
       } else {
-        errorLogger('Element needs to be a Anchor Tag, Example:\n');
-        console.log(c + `\t${el.outerHTML}\n`, red + code);
-        console.log('Change to:\n\n');
+        let href = el.getAttribute('href');
+        errorLogger('Element needs to be a <use/> or <a></a> Tag, Example:');
+        console.log(c + `\t${el.outerHTML}`, red + code);
+        console.log('Change to:');
+        console.log(c + `\t<use ${
+          el.classList ?
+            `class="${el.classList}" ` : ``
+          }${
+          el.id ?
+            `id="${el.id}" ` : ``
+          }${href ?
+            `href="${href}"`:'href="/my-file.svg"'}/>`,
+          green + code
+        );
+        console.log('Or:');
         console.log(c + `\t<a ${
           el.classList ?
             `class="${el.classList}" ` : ``
           }${
           el.id ?
             `id="${el.id}" ` : ``
-          }href="/my-file.svg"></a>\n\n`,
+          }${href ?
+            `href="${href}"`:'href="/my-file.svg"'}/></a>`,
           green + code
         );
       }
@@ -136,8 +150,5 @@ const inlinesvg = (query, callback, return_elements) => {
     return errorLogger('No elements found for the selector: ' + query);
   }
 };
-if (typeof exports != "undefined") {
-  exports.inlinesvg = inlinesvg;
-} else {
-  window.inlinesvg = inlinesvg;
-}
+if (typeof exports != "undefined") exports.inlinesvg = inlinesvg; 
+else window.inlinesvg = inlinesvg;
