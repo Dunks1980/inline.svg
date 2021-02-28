@@ -53,15 +53,26 @@ const errorLogger = (message) => {
   return console.log(c + prefix + c + message, red, inherit);
 };
 
-const inlinesvg = (query, callback, return_elements) => {
+const errorLogger_change_to = (tagType, el) => {
+  let uri = el.getAttribute('href') || el.getAttribute('src');
+  console.log(c + `\t<${tagType} ${
+    el.classList ?
+      `class="${el.classList}" ` : ``
+    }${
+    el.id ?
+      `id="${el.id}" ` : ``
+    }${uri ?
+      `href="${uri}"`:'href="/my-file.svg"'}></${tagType}>`,
+    green + code);
+};
 
+const inlinesvg = (query, callback, return_elements) => {
   let
     arrOfEls,
     arrOfAdded = [],
     countOfAdded = 0,
     els = document.querySelectorAll(query),
     count = 0;
-
   // Get images and return callback with data:
   const getImage = (source_el, href, last_image) => {
     let hasCallback = callback && typeof callback === 'function';
@@ -77,29 +88,24 @@ const inlinesvg = (query, callback, return_elements) => {
         firstChild_el.setAttribute(dataAttr, `${query}-${++countOfAdded}`);
         source_el.parentNode.replaceChild(firstChild_el, source_el);
         arrOfAdded.push(`${query}-${countOfAdded}`);
-        return firstChild_el;
-      })
-      .then(function (firstChild_el) {
         if (hasCallback) {
           arrOfEls.push({
             url: href,
             dataAttr: `${query}-${countOfAdded}`,
             element: return_elements ? firstChild_el : false
           });
-        }
-      }).then(function () {
-        if (last_image && hasCallback) {
-          let countOfFound = 0;
-          arrOfAdded.forEach((item) => {
-            checkElement(`[${dataAttr}="${item}"]`).then(() => {
-              countOfFound++;
-              if (countOfFound === countOfAdded) callback(arrOfEls);
+          if (last_image) {
+            let countOfFound = 0;
+            arrOfAdded.forEach((item) => {
+              checkElement(`[${dataAttr}="${item}"]`).then(() => {
+                countOfFound++;
+                if (countOfFound === countOfAdded) callback(arrOfEls);
+              });
             });
-          });
+          }
         }
-      });
+      }).catch(error => console.log(error));
   };
-  
   // Check for issues and get images:
   if (els && els.length) {
     arrOfEls = [];
@@ -118,31 +124,12 @@ const inlinesvg = (query, callback, return_elements) => {
           return errorLogger('Can only convert svg files');
         }
       } else {
-        let href = el.getAttribute('href');
-        errorLogger('Element needs to be a <use/> or <a></a> Tag, Example:');
+        errorLogger('Element needs to be a <use></use> or <a></a> Tag, Example:');
         console.log(c + `\t${el.outerHTML}`, red + code);
         console.log('Change to:');
-        console.log(c + `\t<use ${
-          el.classList ?
-            `class="${el.classList}" ` : ``
-          }${
-          el.id ?
-            `id="${el.id}" ` : ``
-          }${href ?
-            `href="${href}"`:'href="/my-file.svg"'}/>`,
-          green + code
-        );
+        errorLogger_change_to('use', el);
         console.log('Or:');
-        console.log(c + `\t<a ${
-          el.classList ?
-            `class="${el.classList}" ` : ``
-          }${
-          el.id ?
-            `id="${el.id}" ` : ``
-          }${href ?
-            `href="${href}"`:'href="/my-file.svg"'}/></a>`,
-          green + code
-        );
+        errorLogger_change_to('a', el);
       }
     });
   } else {
