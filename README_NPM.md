@@ -35,7 +35,7 @@ Or old way:
 <a class="svg" href="svg/inline1.svg"></a>
 <a class="svg" href="svg/inline2.svg"></a>
 ```
-Then call this function in your JS, it will attempt to convert all tags with if finds with that selector:
+Then call this function in your JS, it will attempt to convert all tags it finds with that selector:
 
 ```javascript
 inlinesvg('.svg');
