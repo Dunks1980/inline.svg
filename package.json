@@ -1,6 +1,6 @@
 {
   "name": "inline.svg",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "A simple plugin that inlines a SVG file in your HTML",
   "scripts": {
     "serve": "parcel src/index.html",
