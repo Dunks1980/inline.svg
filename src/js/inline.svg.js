@@ -75,12 +75,11 @@ const inlinesvg = (query, callback, return_elements) => {
         }
         let firstChild_el = stringToHTML(body).childNodes[0];
         firstChild_el.setAttribute(dataAttr, `${query}-${++countOfAdded}`);
-        source_el.insertAdjacentElement('afterend', firstChild_el);
+        source_el.parentNode.replaceChild(firstChild_el, source_el);
         arrOfAdded.push(`${query}-${countOfAdded}`);
         return firstChild_el;
       })
       .then(function (firstChild_el) {
-        source_el.parentNode.removeChild(source_el);
         if (hasCallback) {
           arrOfEls.push({
             url: href,

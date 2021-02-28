@@ -24,50 +24,24 @@ import {inlinesvg} from "@dunks1980/inline.svg";
 New in version 1.2.0 (better for caching and wrapping with an anchor):
 
 ```html
-<div><use class="svg" href="svg/inline1.svg"/></div> <!-- This is Better -->
-<use class="svg" href="svg/inline2.svg"></use> <!-- but this still works -->
+<use class="svg" href="svg/foo.svg"></use> 
+<use class="svg" href="svg/bar.svg"></use> 
 ```
-! Note on using, &lt;use/&gt; tag. It has no closing tag and in my tests, if it is not immediately followed by a closing tag it can cause the rest of the page to render incorrectly, you could use &lt;use&gt;&lt;/use&gt; but I find &lt;div&gt;&lt;use/>&lt;/div&gt; cleaner as the &lt;use/&gt; tag doesn't usually have a closing tag. 
 
 Or old way:
 
 ```html
-<a class="svg" href="svg/inline1.svg"></a>
-<a class="svg" href="svg/inline2.svg"></a>
+<a class="svg" href="svg/foo.svg"></a>
+<a class="svg" href="svg/bar.svg"></a>
 ```
 Then call this function in your JS, it will attempt to convert all tags it finds with that selector:
 
 ```javascript
 inlinesvg('.svg');
 ```
-This replaces the &lt;a&gt;&lt;/a&gt; <a></a> or &lt;use/&gt; tags with the SVG file contents, inlined in the document. 
+This replaces the &lt;use&gt;&lt;/use&gt; or &lt;a&gt;&lt;/a&gt; <a></a> tags with the SVG file contents, inlined in the document. 
 
 <br/>
-
-If you use an anchor tag to inline the SVG wrap the anchor in another element like a div or a span, like so if you want it to be a link:
-
-```html
-<a href="/my-link" rel="noopener" aria-label="my-image">
-  <div> 
-    <a class="svg" href="svg/inline1.svg"></a>
-  </div>
-</a>
-```
-
-Or, alternatively, and probably a better way (as not nesting anchors, if using them), is to open the svg file in a text editor/IDE and wrap the SVG in your anchor tag:
-```html
-<a href="/my-link" rel="noopener" aria-label="my-image">
-  <svg>...</svg>
-</a>
-```
-
-If you use the &lt;use/&gt; tag this in not needed:
-
-```html
-<a href="/my-link" rel="noopener" aria-label="my-image">
-  <use class="svg" href="svg/inline1.svg"/>
-</a>
-```
 
 A Callback is available for after adding the SVG's:
 
