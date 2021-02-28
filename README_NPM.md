@@ -39,7 +39,7 @@ Then call this function in your JS, it will attempt to convert all tags it finds
 ```javascript
 inlinesvg('.svg');
 ```
-This replaces the &lt;use&gt;&lt;/use&gt; or &lt;a&gt;&lt;/a&gt; <a></a> tags with the SVG file contents, inlined in the document. 
+This replaces the &lt;use&gt;&lt;/use&gt; or &lt;a&gt;&lt;/a&gt; tags with the SVG file contents, inlined in the document. 
 
 <br/>
 
