@@ -11,13 +11,53 @@
   <link rel="stylesheet" href="scss/index.scss">
 </head>
 <body>
+  <div class="js-false">
+    <img src onerror="this.parentNode.parentNode.removeChild(this.parentNode)">
+    <style>
+      header, .svg-wrapper, footer {display: none;} /* main content wrapper */
+      body {height: 100vh; padding: 0; margin: 0;}
+      .js-false {
+        fill: #434343;
+        color: #434343;
+        padding: 10px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: calc(100% - 20px);
+        text-align: center;
+        font-size: 18px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    </style>
+    <svg xmlns="http://www.w3.org/2000/svg" width="50px" height="50px" viewBox="0 0 512 512">
+      <path d="M 111.00,114.00
+      C 111.00,114.00 171.00,114.00 171.00,114.00
+        171.00,114.00 171.00,177.00 171.00,177.00
+        171.00,177.00 111.00,177.00 111.00,177.00
+        111.00,177.00 111.00,114.00 111.00,114.00 Z
+      M 336.00,114.00
+      C 336.00,114.00 396.00,114.00 396.00,114.00
+        396.00,114.00 396.00,177.00 396.00,177.00
+        396.00,177.00 336.00,177.00 336.00,177.00
+        336.00,177.00 336.00,114.00 336.00,114.00 Z
+      M 0.00,397.50
+      C 0.00,397.50 -0.21,362.84 1.02,360.68
+        2.29,358.45 118.00,252.00 264.00,257.50
+        400.00,259.50 509.70,355.30 511.40,359.59
+        512.12,361.39 512.00,397.50 512.00,397.50
+        471.14,375.89 390.00,314.50 266.00,315.46
+        140.00,304.00 3.65,396.43 0.00,397.50 Z" />
+    </svg><br/>
+    Sorry but this site does not work without Javascript.
+  </div>
   <header>
     <div class="logo"><use class="inlinesvg" href="svg/logo.svg"></use></div>
     <div class="npm"><use class="inlinesvg" href="svg/npm.svg"></use></div>
     <div class="github"><use class="inlinesvg" href="svg/github.svg"></use></div>
     <div class="email"><use class="inlinesvg" href="svg/email.svg"></use></div>
   </header>
-  <div class="svg-wrapper">
+  <main class="svg-wrapper">
     <div class="svg-logo"><use id="svg" href="svg/inline.svg/"></use></div>
     <div class="code-text">
       <h1><pre><code>npm i @dunks1980/inline.svg --save</code></pre></h1>
@@ -25,7 +65,7 @@
       <h1><pre><code>&lt;use id="svg" href="/foo.svg"&gt;&lt;/use&gt;</code></pre></h1>
       <h1><pre><code>inlinesvg('#svg');</code></pre></h1>
     </div>
-  </div>
+  </main>
   <footer></footer>
 </body>
 </html>
