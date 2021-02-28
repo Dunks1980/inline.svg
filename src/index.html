@@ -12,7 +12,10 @@
 </head>
 <body>
   <div class="js-false">
-    <img src onerror="this.parentNode.parentNode.removeChild(this.parentNode)">
+    <script>
+      var js = document.querySelector('.js-false');
+      js.parentNode.removeChild(js);
+    </script>
     <style>
       header, .svg-wrapper, footer {display: none;} /* main content wrapper */
       body {height: 100vh; padding: 0; margin: 0;}
