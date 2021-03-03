@@ -11,11 +11,8 @@
   <link rel="stylesheet" href="scss/index.scss">
 </head>
 <body>
+  <noscript>
   <div class="js-false">
-    <script>
-      var js = document.querySelector('.js-false');
-      js.parentNode.removeChild(js);
-    </script>
     <style>
       header, .svg-wrapper, footer {display: none;} /* main content wrapper */
       body {height: 100vh; padding: 0; margin: 0;}
@@ -54,6 +51,8 @@
     </svg><br/>
     Sorry but this site does not work without Javascript.
   </div>
+</noscript>
+<template id="js">
   <header>
     <div class="logo"><use class="inlinesvg" href="svg/logo.svg"></use></div>
     <div class="npm"><use class="inlinesvg" href="svg/npm.svg"></use></div>
@@ -70,5 +69,7 @@
     </div>
   </main>
   <footer></footer>
+</template>
+<script>var js = document.getElementById('js').innerHTML; document.body.innerHTML = js;</script>
 </body>
 </html>

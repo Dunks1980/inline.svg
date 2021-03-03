@@ -20,6 +20,7 @@ header {
   left: 0px;
   right: 0px;
   height: 60px;
+  z-index: 3;
   div {
     display: flex;
     justify-content: center;
@@ -99,9 +100,14 @@ header {
   }
 }
 
-.svg-wrapper {
-  overflow: hidden;
+.svg-wrapper.loaded {
   animation: load ease-in-out 0.4s;
+  animation-fill-mode: forwards;
+}
+
+.svg-wrapper {
+  opacity: 0;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
