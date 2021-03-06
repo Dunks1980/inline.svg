@@ -61,10 +61,16 @@
   </header>
   <main class="svg-wrapper">
     <div class="svg-logo"><use id="svg" href="svg/inline.svg/"></use></div>
-    <use class="inlinesvg" href="html/html.html/"></use>
+    <use id="html" href="html/html.html/"></use>
   </main>
   <footer></footer>
 </template>
-<script>var js = document.getElementById('js').innerHTML; document.body.innerHTML = js;</script>
+<script>
+  var js = document.getElementById('js').innerHTML; document.body.innerHTML = js;
+  var d = new Date();
+  var n = d.getFullYear();
+  var copywrite = '©' + n + ' <a href="https://dunks1980.com">dunks1980.com</a>';
+  document.querySelector('footer').innerHTML = copywrite;
+</script>
 </body>
 </html>

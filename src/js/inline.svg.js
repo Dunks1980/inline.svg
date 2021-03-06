@@ -62,13 +62,40 @@ const errorLogger_change_to = (tagType, el) => {
     green + code);
 };
 
-const inlinesvg = (query, callback, return_elements) => {
+const inlinesvg = (p1, p2, p3, p4) => {
   let
     arrOfEls,
     arrOfAdded = [],
     countOfAdded = 0,
-    els = document.querySelectorAll(query),
-    count = 0;
+    els,
+    count = 0,
+    query,
+    callback,
+    return_elements,
+    vars_object;
+
+  const checkParam = (paramName) => {
+    const param = (...args) => args[0];
+    switch (param(typeof paramName)) {
+      case 'string':
+        query = paramName;
+        els = document.querySelectorAll(query);
+        break;
+      case 'function':
+        callback = paramName;
+        break;
+      case 'boolean':
+        return_elements = paramName;
+        break;
+      case 'object':
+        vars_object = paramName;
+        break;
+    }
+  };
+  checkParam(p1);
+  checkParam(p2);
+  checkParam(p3);
+  checkParam(p4);
 
   const callbackChecker = () => {
     let countOfFound = 0;
@@ -88,7 +115,18 @@ const inlinesvg = (query, callback, return_elements) => {
         return response.text();
       })
       .then(function (body) {
-        let firstChild_el = stringToHTML(body).childNodes[0];
+        let bodyVarsAdded = body;
+        let bodyVarsMatch = body.match(/{{(.*?)}}/g);
+        if (bodyVarsMatch) {
+          [].forEach.call(bodyVarsMatch, (varname) => {
+            if (vars_object && vars_object[`${varname.replace(/[{}]/g, "")}`]) {
+              let replace = varname;
+              let re = new RegExp(replace, "g");
+              bodyVarsAdded = bodyVarsAdded.replace(re, vars_object[`${varname.replace(/[{}]/g, "")}`]);
+            }
+          });
+        }
+        let firstChild_el = stringToHTML(bodyVarsAdded).childNodes[0];
         if (!firstChild_el) return errorLogger('No Element not found in file: ' + href);
         let error = false;
         try {
@@ -105,6 +143,10 @@ const inlinesvg = (query, callback, return_elements) => {
         if (!error) {
           ++countOfAdded;
           firstChild_el.setAttribute(dataAttr, `${query}-${countOfAdded}`);
+          if (!source_el.parentNode) {
+            errorLogger('Cannot find source <use> or <a> element, its probably already been replaced.');
+            return false;
+          }
           source_el.parentNode.replaceChild(firstChild_el, source_el);
           arrOfAdded.push(`${query}-${countOfAdded}`);
           if (hasCallback) {
@@ -146,5 +188,5 @@ const inlinesvg = (query, callback, return_elements) => {
     return errorLogger('No elements found for the selector: ' + query);
   }
 };
-if (typeof exports != "undefined") exports.inlinesvg = inlinesvg; 
+if (typeof exports != "undefined") exports.inlinesvg = inlinesvg;
 else window.inlinesvg = inlinesvg;

@@ -96,3 +96,40 @@ inlinesvg('.inlinesvg', (elements) => {
       ariaColIndex: null
       ariaColSpan: null
 ```
+
+New in version 1.3.1 Passing data to inlined content:
+
+index.html
+```html
+<use id="html" href="html/example.html"></use>
+```
+
+html/example.html
+```html
+<div class="{{classname}}">
+  <p>{{line1}}</p>
+  <p>{{line2}}</p>
+  <p>{{line3}}</p>
+  <p>{{line4}}</p>
+</div>
+```
+
+```javascript
+inlinesvg('#html', {
+  classname: `my-class`,
+  line1: `npm i @dunks1980/inline.svg --save`,
+  line2: `import {inlinesvg} from "@dunks1980/inline.svg";`,
+  line3: `&lt;use id="svg" href="/foo.svg"&gt;&lt;/use&gt;`,
+  line4: `inlinesvg('#svg');`
+});
+```
+
+Results in the following rendered in index.html:
+```html
+<div class="my-class">
+  <p>npm i @dunks1980/inline.svg --save</p>
+  <p>import {inlinesvg} from "@dunks1980/inline.svg";</p>
+  <p>&lt;use id="svg" href="/foo.svg"&gt;&lt;/use&gt;</p>
+  <p>inlinesvg('#svg');</p>
+</div>
+```
