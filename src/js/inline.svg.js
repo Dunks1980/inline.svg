@@ -45,10 +45,6 @@ const checkElement = async (selector) => {
   return document.querySelector(selector);
 };
 
-const endsWith = (str, suffix) => {
-  return str.slice(-suffix.length) === suffix;
-};
-
 const errorLogger = (message) => {
   return console.log(c + prefix + c + message, red, inherit);
 };
@@ -73,6 +69,17 @@ const inlinesvg = (query, callback, return_elements) => {
     countOfAdded = 0,
     els = document.querySelectorAll(query),
     count = 0;
+
+  const callbackChecker = () => {
+    let countOfFound = 0;
+    arrOfAdded.forEach((item) => {
+      checkElement(`[${dataAttr}="${item}"]`).then(() => {
+        countOfFound++;
+        if (countOfFound === countOfAdded) callback(arrOfEls);
+      });
+    });
+  };
+
   // Get images and return callback with data:
   const getImage = (source_el, href, last_image) => {
     let hasCallback = callback && typeof callback === 'function';
@@ -81,27 +88,34 @@ const inlinesvg = (query, callback, return_elements) => {
         return response.text();
       })
       .then(function (body) {
-        if (!stringToHTML(body) && !stringToHTML(body).childNodes[0]) {
-          return errorLogger('No Element not found in file: ' + href);
-        }
         let firstChild_el = stringToHTML(body).childNodes[0];
-        firstChild_el.setAttribute(dataAttr, `${query}-${++countOfAdded}`);
-        source_el.parentNode.replaceChild(firstChild_el, source_el);
-        arrOfAdded.push(`${query}-${countOfAdded}`);
-        if (hasCallback) {
-          arrOfEls.push({
-            url: href,
-            dataAttr: `${query}-${countOfAdded}`,
-            element: return_elements ? firstChild_el : false
-          });
-          if (last_image) {
-            let countOfFound = 0;
-            arrOfAdded.forEach((item) => {
-              checkElement(`[${dataAttr}="${item}"]`).then(() => {
-                countOfFound++;
-                if (countOfFound === countOfAdded) callback(arrOfEls);
-              });
+        if (!firstChild_el) return errorLogger('No Element not found in file: ' + href);
+        let error = false;
+        try {
+          firstChild_el.setAttribute(dataAttr, `test`);
+        } catch (e) {
+          error = e instanceof TypeError;
+          if (error) {
+            errorLogger('Cannot inline this file: ' + href);
+            if (hasCallback && last_image) {
+              callbackChecker();
+            }
+          }
+        }
+        if (!error) {
+          ++countOfAdded;
+          firstChild_el.setAttribute(dataAttr, `${query}-${countOfAdded}`);
+          source_el.parentNode.replaceChild(firstChild_el, source_el);
+          arrOfAdded.push(`${query}-${countOfAdded}`);
+          if (hasCallback) {
+            arrOfEls.push({
+              url: href,
+              dataAttr: `${query}-${countOfAdded}`,
+              element: return_elements ? firstChild_el : false
             });
+            if (last_image) {
+              callbackChecker();
+            }
           }
         }
       }).catch(error => console.log(error));
@@ -117,12 +131,8 @@ const inlinesvg = (query, callback, return_elements) => {
       if (tag === 'use' || tag === 'a') {
         let href = el.getAttribute('href');
         if (!href) return errorLogger('No href found');
-        if (endsWith(href, '.svg')) {
-          getImage(el, href, Number(count) === Number(els.length - 1));
-          count++;
-        } else {
-          return errorLogger('Can only convert svg files');
-        }
+        getImage(el, href, Number(count) === Number(els.length - 1));
+        count++;
       } else {
         errorLogger('Element needs to be a <use></use> or <a></a> Tag, Example:');
         console.log(c + `\t${el.outerHTML}`, red + code);

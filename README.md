@@ -21,11 +21,17 @@ import {inlinesvg} from "@dunks1980/inline.svg";
 
 ### Usage
 
-New in version 1.2.0 (better for caching and wrapping with an anchor):
+New in version 1.2.0 - better for caching and wrapping with an anchor:
 
 ```html
 <use class="svg" href="svg/foo.svg"></use> 
 <use class="svg" href="svg/bar.svg"></use> 
+```
+New in version 1.3.0 - You can use any type of file extension as long as the contents are valid HTML, this can be used to inline HTML elements including script tags and not just SVG's:
+
+```html
+<use class="somehtml" href="svg/foo.html"></use> 
+<use class="somephp" href="svg/bar.php"></use> 
 ```
 
 Or old way:
