@@ -12,11 +12,6 @@ npm i @dunks1980/inline.svg --save
 ```javascript
 import {inlinesvg} from "@dunks1980/inline.svg";
 ```
-### Or
-
-```html
-<script src="https://unpkg.com/@dunks1980/inline.svg/index.min.js" defer></script>
-```
 <br />
 
 ### Usage
