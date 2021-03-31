@@ -188,5 +188,8 @@ const inlinesvg = (p1, p2, p3, p4) => {
     return errorLogger('No elements found for the selector: ' + query);
   }
 };
-if (typeof exports != "undefined") exports.inlinesvg = inlinesvg;
-else window.inlinesvg = inlinesvg;
+if (typeof exports != "undefined") {
+  exports.inlinesvg = inlinesvg;
+} else {
+  window.inlinesvg = inlinesvg;
+}
