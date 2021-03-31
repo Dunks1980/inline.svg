@@ -18,7 +18,7 @@ function deleteFolderRecursive(path) {
 deleteFolderRecursive("./dist");
 
 // run the parcel scripts
-let parcel_scripts = 'parcel build src/index.html --no-content-hash --no-source-maps';
+let parcel_scripts = 'parcel build src/index.html --no-content-hash --no-source-maps --experimental-scope-hoisting'; 
 
 console.log(execSync(parcel_scripts, {encoding: 'utf8'}));
 
