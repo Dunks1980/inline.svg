@@ -1,5 +1,11 @@
 import {inlinesvg} from "./inline.svg.js";
 
+var js = document.getElementById('js').innerHTML; document.body.innerHTML = js;
+var d = new Date();
+var n = d.getFullYear();
+var copywrite = '©' + n + ' <a href="https://dunks1980.com">dunks1980.com</a>';
+document.querySelector('footer').innerHTML = copywrite;
+
 let count = 0;
 let arrOfLoaded = [];
 const checkAllLoaded = () => {
