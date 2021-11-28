@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "parcel src/index.html",
     "build": "node scripts/build_task.js",
+    "build_site": "parcel build src/index.html",
     "package": "node scripts/package_task.js"
   },
   "author": "Ian Dunkerley",
