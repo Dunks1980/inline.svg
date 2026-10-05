@@ -1,9 +1,21 @@
 import {inlinesvg} from "./inline.svg.js";
+import logoSvg from "url:../svg/logo.svg";
+import npmSvg from "url:../svg/npm.svg";
+import githubSvg from "url:../svg/github.svg";
+import emailSvg from "url:../svg/email.svg";
+import inlineSvg from "url:../svg/inline.svg";
+import htmlExample from "url:../html/html.html";
 
 var js = document.getElementById('js').innerHTML; document.body.innerHTML = js;
+document.querySelector('.logo use').setAttribute('href', logoSvg);
+document.querySelector('.npm use').setAttribute('href', npmSvg);
+document.querySelector('.github use').setAttribute('href', githubSvg);
+document.querySelector('.email use').setAttribute('href', emailSvg);
+document.querySelector('#svg').setAttribute('href', inlineSvg);
+document.querySelector('#html').setAttribute('href', htmlExample);
 var d = new Date();
 var n = d.getFullYear();
-var copywrite = '©' + n + ' <a href="https://dunks1980.com">dunks1980.com</a>';
+var copywrite = '©' + n + ' <a href="https://inlinesvg.dunkerley.dev">ian.dunkerley.dev</a>';
 document.querySelector('footer').innerHTML = copywrite;
 
 let count = 0;

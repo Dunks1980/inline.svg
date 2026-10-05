@@ -2,7 +2,7 @@
 
 A simple way to render a SVG file into a HTML document so styling and js can be applied to it.
 <br />
-## <a href="https://inlinesvg.dunks1980.com">Demo</a>
+## <a href="https://inlinesvg.dunkerley.dev">Demo</a>
 <br />
 
 ### Install
