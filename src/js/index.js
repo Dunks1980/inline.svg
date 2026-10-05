@@ -15,7 +15,7 @@ document.querySelector('#svg').setAttribute('href', inlineSvg);
 document.querySelector('#html').setAttribute('href', htmlExample);
 var d = new Date();
 var n = d.getFullYear();
-var copywrite = '©' + n + ' <a href="https://inlinesvg.dunkerley.dev">ian.dunkerley.dev</a>';
+var copywrite = '©' + n + ' <a href="https://ian.dunkerley.dev">ian.dunkerley.dev</a>';
 document.querySelector('footer').innerHTML = copywrite;
 
 let count = 0;

@@ -152,7 +152,7 @@ header {
       max-width: 450px;
       .svgbar {
         position: absolute;
-        fill: red;
+        fill: #ffb13b;
         transform-origin: 0 0;
         animation: colorchange 15s ease-in-out infinite;
       }
@@ -186,7 +186,7 @@ footer {
 
 @keyframes colorchange {
   0% {
-    fill: red;
+    fill: #ffb13b;
     transform: translate(150px, 150px) rotate(0deg);
   }
 
