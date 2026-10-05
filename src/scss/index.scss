@@ -153,6 +153,7 @@ header {
       .svgbar {
         position: absolute;
         fill: #ffb13b;
+        transform-origin: 0 0;
         animation: colorchange 15s ease-in-out infinite;
       }
     }
