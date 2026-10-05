@@ -187,7 +187,7 @@ footer {
 @keyframes colorchange {
   0% {
     fill: #ffb13b;
-    transform: rotate(0deg);
+    transform: translate(150px, 150px) scale(0.85) rotate(0deg);
   }
 
   25% {
@@ -196,7 +196,7 @@ footer {
 
   50% {
     fill: blue;
-    transform: rotate(360deg);
+    transform: translate(150px, 150px) scale(0.85) rotate(360deg);
   }
 
   75% {
@@ -205,6 +205,6 @@ footer {
 
   100% {
     fill: #ffb13b;
-    transform: rotate(0deg);
+    transform: translate(150px, 150px) scale(0.85) rotate(0deg);
   }
 }

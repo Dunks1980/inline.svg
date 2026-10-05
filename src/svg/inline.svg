@@ -54,8 +54,8 @@
     d="M8.5,150 H291.5 V250 C291.5,273.5 273.5,291.5 250,291.5 H50 C26.5,291.5 8.5,273.5 8.5,250 Z" />
 
   <g stroke-width="38.0086" stroke="#000">
-    <g id="svgstar" transform="translate(150, 150)">
-      <g class="svgbar">
+    <g id="svgstar">
+      <g class="svgbar" transform="translate(150, 150)">
         <path id="svgbar"
           d="M-84.1487,-15.8513 a22.4171,22.4171 0 1 0 0,31.7026 h168.2974 a22.4171,22.4171 0 1 0 0,-31.7026 Z" />
         <use xlink:href="#svgbar" transform="rotate(45)" />
@@ -66,9 +66,9 @@
     </g>
   </g>
 
-  <g id="svgstar" transform="translate(150, 150)">
+  <g id="svgstar">
 
-    <g class="svgbar">
+    <g class="svgbar" transform="translate(150, 150)">
       <path id="svgbar"
         d="M-84.1487,-15.8513 a22.4171,22.4171 0 1 0 0,31.7026 h168.2974 a22.4171,22.4171 0 1 0 0,-31.7026 Z" />
       <use xlink:href="#svgbar" transform="rotate(45)" />
